@@ -25,10 +25,10 @@ function start() {
     .prompt({
       name: "action",
       type: "rawlist",
-      message: "What would ou like to do?",
+      message: "What would you like to do?",
       choices: [
         "Add a department/role/employee?",
-        "View existing departments/roles/employees?",
+        "View existing departments/role/employees?",
         "Update employee?",
         "DELETE?!?"
       ]
@@ -37,11 +37,11 @@ function start() {
     .then(function (answer) {
       switch (answer.action) {
         case "Add a department/role/employee?":
-          addDptRoleEmp();
+          addDptRolesEmp();
           break;
 
         case "View existing departments/roles/employees?":
-          viewDptRoleEmp();
+          viewDptRolesEmp();
           break;
 
         case "Update employee?":
@@ -57,7 +57,7 @@ function start() {
 };
 
 // functionality 
-function addDptRoleEmp() {
+function addDptRolesEmp() {
   inquirer
     .prompt({
       name: "add_action",
@@ -65,18 +65,18 @@ function addDptRoleEmp() {
       message: "What would you like to add?",
       choices: [
         "Add departments?",
-        "Add roles?",
-        "Add emplyees?",
+        "Add role?",
+        "Add employees?",
       ]
     })
     .then(function (answer) {
       switch (answer.add_action) {
         case "Add departments?":
-          addDptRoleEmp();
+          addDptRolesEmp();
           break;
 
-        case "Add roles?":
-          addDptRoleEmp();
+        case "Add role?":
+          addDptRolesEmp();
           break;
 
       }
@@ -116,7 +116,7 @@ function addDpt() {
     })
 };
 
-function addRole() {
+function addRoles() {
   inquirer
     .prompt(
       [{
@@ -140,7 +140,7 @@ function addRole() {
     .then(function (answer) {
 
         connection.query(
-          "INSERT INTO role SET ?", {
+          "INSERT INTO roles SET ?", {
             title: answer.addTitle,
             salary: answer.addSalary,
             department_id: answer.addDepartmentId || 0
@@ -175,7 +175,7 @@ function addRole() {
             message: "What is the first name of the new employee?"
           },
           {
-            name: "addRoleId",
+            name: "addRolesId",
             type: "input",
             message: "What is the Role ID of the new employee?"
             },
@@ -193,7 +193,7 @@ function addRole() {
           {
             first_name: answer.addFirstName,
             last_name: answer.addLastName,
-            role_id: answer.addRoleId || 0,
+            roles_id: answer.addRolesId || 0,
             manager_id: answer.addManagerId || 0
         },
 
@@ -203,7 +203,7 @@ function addRole() {
           const table = cTable.getTable([{
             first_name: answer.addFirstName,
             last_name: answer.addLastName,
-            role_id: answer.addRoleId || 0,
+            roles_id: answer.addRolesId || 0,
             manager_id: answer.addManagerId ||0
 
           }])
@@ -213,7 +213,7 @@ function addRole() {
         })
     };
 
-    function viewDptRoleEmp() {
+    function viewDptRolesEmp() {
       inquirer
         .prompt({
           name: "view_action",
@@ -237,7 +237,7 @@ function addRole() {
             break;
     
           case "View roles?":
-            viewRole();
+            viewRoles();
             break;
     
           case "View employees?":
@@ -252,7 +252,7 @@ function addRole() {
         });
     };
     
-    // working
+    // 
     function viewDpt() {
       connection.query("SELECT * FROM department", function(err, res) {
         if (err) throw err;
@@ -268,16 +268,16 @@ function addRole() {
     
     
     // working
-    function viewRole() {
+    function viewRoles() {
       inquirer
       .prompt({
-        name: "view_role",
+        name: "view_roles",
         type: "input",
         message: "What role would you like to view?"
       })
       .then(function(answer) {
-        console.log(answer.view_role);
-        connection.query('SELECT * FROM role WHERE ?', {title: answer.view_role}, function(err, res) {
+        console.log(answer.view_roles);
+        connection.query('SELECT * FROM roles WHERE ?', {title: answer.view_roles}, function(err, res) {
           if (err) throw err;
           for(let i = 0; i<res.length; i++) {
             const table = cTable.getTable([{
@@ -308,7 +308,7 @@ function addRole() {
           const table = cTable.getTable([{
             first_name: res[i].first_name,
             last_name: res[i].last_name,
-            role_id: res[i].role_id || 0,
+            roles_id: res[i].roles_id || 0,
             manager_id: res[i].manager_id || 0
           }])
           console.log(table)
@@ -326,7 +326,7 @@ function addRole() {
           const table = cTable.getTable([{
             FirstName: res[i].first_name ,
             LastName: res[i].last_name,
-            role_id: res[i].role_id || 0,
+            roles_id: res[i].roles_id || 0,
             manager_id: res[i].manager_id || 0
           }])
           console.log(table)
@@ -354,7 +354,7 @@ function addRole() {
             break;
     
           case "Update employee role?":
-            updateEmpRole();
+            updateEmpRoles();
             break;
     
           case "Update employee manager ID?":
@@ -422,8 +422,8 @@ function addRole() {
     })
     };
     
-    // working
-    function updateEmpRole() {
+    // 
+    function updateEmpRoles() {
       inquirer
         .prompt([{
           name: "findEmpId",
@@ -431,7 +431,7 @@ function addRole() {
           message: "What is the ID of the employee you are trying to change?"
         },
         {
-          name: "updateRoleId",
+          name: "updateRolesId",
           type: "input",
           message: "What is the new Role ID of the employee?"
         },
@@ -440,16 +440,16 @@ function addRole() {
         .then(function(answer) {
     
           connection.query(
-          `UPDATE employee SET role_id = "${answer.updateRoleId}" WHERE id = "${answer.findEmpId}"`,
+          `UPDATE employee SET roles_id = "${answer.updateId}" WHERE id = "${answer.findEmpId}"`,
           function(err) {
             if (err) throw err;
             console.log("Employee updated successfully!");
-            start();
+            start();Roles
           })
       })
     };
     
-    //working
+    //
     function deleteInfo() {
       inquirer
         .prompt({
@@ -469,7 +469,8 @@ function addRole() {
             break;
     
           case "Delete roles?":
-            deleteRole();
+            deleteRoles
+            ();
             break;
     
           case "Delete employees?":
@@ -479,7 +480,7 @@ function addRole() {
         });
     };
     
-    // working
+    
     function deleteDpt() {
       inquirer
         .prompt([{
@@ -499,18 +500,18 @@ function addRole() {
       })
     };
     
-    // working
-    function deleteRole() {
+    
+    function deleteRoles() {
       inquirer
         .prompt([{
-          name: "findRoleTitle",
+          name: "findRolesTitle",
           type: "input",
           message: "What is the Title of the role you are trying to delete?"
         }
       ])
       .then(function(answer) {
         connection.query(
-        `DELETE FROM role WHERE title = "${answer.findRoleTitle}"`,
+        `DELETE FROM roles WHERE title = "${answer.findRolesTitle}"`,
         function(err) {
           if (err) throw err;
           console.log("Role deleted successfully!");
@@ -519,7 +520,7 @@ function addRole() {
       })
     };
     
-    // working
+    
     function deleteEmp() {
       inquirer
         .prompt([{
