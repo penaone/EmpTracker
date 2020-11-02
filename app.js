@@ -23,7 +23,7 @@ const newTeam = function () {
         type: "list",
         name: "type",
         message: "What would you like to do?",
-        choices: ["View ALL Employees", "View ALL Departments", "View ALL Roles", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role"]
+        choices: ["View ALL Employees", "View ALL Departments", "View ALL Roles", "Add a Department", "Add a Role", "Add an Employee", "Update an Employee Role", "Quit",]
       },
     ])
       .then(({ type }) => {
@@ -49,6 +49,9 @@ const newTeam = function () {
 
         } else if (type === "Update an Employee Role") {
           updateEmployeeRole();
+        }else if (type === "Quit") {
+          console.log("Bye")
+          process.exit();
         }
       })
   }

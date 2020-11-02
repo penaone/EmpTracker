@@ -1,10 +1,11 @@
+USE employee_trackerdb;
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES
   ('Ginnie', 'Weasly', 2, 4),
   ('Mr', 'Mr', 2, 2),
   ('Howdie', 'Doodie', 2, 6),
   ('James', 'Joanes', 2, 7),
-  ('Bo', 'Derrek' 2, 3),
+  ('Bo', 'Derrek', 2, 3),
   ('Martha', 'Mavins', 2, 9),
   ('Melanie', 'Martin', 5, 3),
   ('Jacob', 'Malik', 2, 4),

@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS employee_trackerdb;
+CREATE DATABASE employee_trackerdb;
+USE employee_trackerdb;
+
 CREATE TABLE employee(
     id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
